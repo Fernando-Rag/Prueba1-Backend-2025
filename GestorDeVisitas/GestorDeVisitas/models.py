@@ -1,7 +1,6 @@
 from django.db import models
 from django.utils import timezone
 from django.core.exceptions import ValidationError
-from django.db.models import Q, UniqueConstraint, F
 from .validators import validate_rut_chile, normalize_rut, format_rut
 
 class Visitante(models.Model):

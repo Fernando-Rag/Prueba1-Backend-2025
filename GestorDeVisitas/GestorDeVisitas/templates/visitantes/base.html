@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>
+      {% block title %}
+      {% endblock %}
+    </title>
+  </head>
+  <link rel="icon" type="image/png" href="{% static 'favicon.png' %}">
+  <body>
+    <nav class="bg-gray-800 py-6 flex justify-center">
+      <ul class="flex space-x-6">
+        <li>
+          <a href="/"
+            class="px-6 py-2 border-2 border-yellow-400 rounded-full text-white hover:text-yellow-400 hover:bg-gray-700 transition-all duration-200 font-semibold">
+            Registro Visitante
+          </a>
+        </li>
+        <li>
+          <a href="/registroEntrada/"
+            class="px-6 py-2 border-2 border-yellow-400 rounded-full text-white hover:text-yellow-400 hover:bg-gray-700 transition-all duration-200 font-semibold">
+            Registro Entrada
+          </a>
+        </li>
+        <li>
+          <a href="/registroSalida/"
+            class="px-6 py-2 border-2 border-yellow-400 rounded-full text-white hover:text-yellow-400 hover:bg-gray-700 transition-all duration-200 font-semibold">
+            Registro Salida
+          </a>
+        </li>
+        <li>
+          <a href="/busquedaVisitantes/"
+            class="px-6 py-2 border-2 border-yellow-400 rounded-full text-white hover:text-yellow-400 hover:bg-gray-700 transition-all duration-200 font-semibold">
+            Búsqueda de Visitas
+          </a>
+        </li>
+      </ul>
+    </nav>
+    {% block header %}
+    {% endblock %}
+    {% block main %}
+    {% endblock %}
+    {% block footer %}
+    {% endblock %}
+  </body>
+</html>

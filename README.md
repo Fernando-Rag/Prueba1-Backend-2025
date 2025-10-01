@@ -52,9 +52,10 @@ Pasos para ejecutar correctamente el proyecto
 
 python -m venv venv
 
-2-Instalar Django
+2-Instalar Django y paquetes
 
 pip install django
+pip install django-widget-tweaks
 
 3-Ingresamos en la carpeta
 
@@ -62,9 +63,17 @@ cd GestorDeVisitas
 
 4-Verificamos y Aplicamos las migraciones
 
-python manage.py makemigrations
+python manage.py makemigrations GestorDeVisitas
 python manage.py migrate
 
 5-Levantar la pagina
 
 python manage.py runserver
+
+6-crear admin 
+
+python manage.py createsuperuser
+
+ragnar
+ragnar@gmail.cl
+ragnar

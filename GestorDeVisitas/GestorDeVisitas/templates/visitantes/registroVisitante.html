@@ -1,44 +1,54 @@
 {% extends 'visitantes/base.html' %}
+{% load widget_tweaks %}
 {% block title %}Registro Visitante{% endblock %}
 {% block main %}
-<div class="max-w-3xl mx-auto mt-8 bg-white rounded-lg shadow-lg p-8">
-  <h2 class="text-2xl font-bold mb-6 text-gray-800">Visitantes</h2>
-  <form method="post" class="mb-6 space-y-4">
-    {% csrf_token %}
-    {% for field in form %}
-      <div>
-        <label class="block text-gray-700 font-semibold mb-1">{{ field.label_tag }}</label>
-        {{ field }}
-        {% if field.errors %}
-          <div class="text-red-500 text-sm">{{ field.errors }}</div>
-        {% endif %}
-      </div>
-    {% endfor %}
-    <button type="submit" class="bg-yellow-400 text-white px-4 py-2 rounded-full hover:bg-yellow-500 transition font-semibold">Agregar Visitante</button>
-  </form>
-  <table class="w-full text-left border-collapse">
-    <thead>
-      <tr class="bg-gray-200">
-        <th class="px-4 py-2">Nombre</th>
-        <th class="px-4 py-2">Apellido</th>
-        <th class="px-4 py-2">Edad</th>
-        <th class="px-4 py-2">RUT</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for v in visitante %}
-      <tr class="hover:bg-gray-100 transition">
-        <td class="px-4 py-2">{{ v.nombre_s }}</td>
-        <td class="px-4 py-2">{{ v.apellido_s }}</td>
-        <td class="px-4 py-2">{{ v.edad }}</td>
-        <td class="px-4 py-2">{{ v.rut }}</td>
-      </tr>
-      {% empty %}
-      <tr>
-        <td colspan="4" class="text-center py-8 text-gray-400">No hay visitantes registrados.</td>
-      </tr>
+<div class="flex justify-center items-center min-h-screen bg-gray-100">
+  <div class="w-full max-w-3xl bg-white rounded-lg shadow-lg p-6 sm:p-8 mx-2">
+    <h2 class="text-2xl font-bold mb-6 text-gray-800 text-center">Visitantes</h2>
+    <form method="post" class="mb-6 space-y-4">
+      {% csrf_token %}
+      {% for field in form %}
+        <div>
+          <label class="block text-gray-700 font-semibold mb-1">
+            {# Personaliza el label del campo rut #}
+            {% if field.name == 'rut' %}RUT{% else %}{{ field.label }}{% endif %}
+          </label>
+          {{ field|add_class:"w-full px-3 py-2 border border-black rounded focus:outline-none focus:ring-2 focus:ring-yellow-400" }}
+          {% if field.errors %}
+            <div class="text-red-500 text-sm">{{ field.errors }}</div>
+          {% endif %}
+        </div>
       {% endfor %}
-    </tbody>
-  </table>
+      <button type="submit" class="bg-yellow-400 text-white px-4 py-2 rounded-full hover:bg-yellow-500 transition font-semibold w-full">
+        Agregar Visitante
+      </button>
+    </form>
+    <div class="overflow-x-auto">
+      <table class="w-full text-left border-collapse">
+        <thead>
+          <tr class="bg-gray-200">
+            <th class="px-4 py-2">Nombre</th>
+            <th class="px-4 py-2">Apellido</th>
+            <th class="px-4 py-2">Edad</th>
+            <th class="px-4 py-2">RUT</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for v in visitantes %}
+          <tr class="hover:bg-gray-100 transition">
+            <td class="px-4 py-2">{{ v.nombre_s }}</td>
+            <td class="px-4 py-2">{{ v.apellido_s }}</td>
+            <td class="px-4 py-2">{{ v.edad }}</td>
+            <td class="px-4 py-2">{{ v.rut }}</td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="4" class="text-center py-8 text-gray-400">No hay visitantes registrados.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
 {% endblock %}

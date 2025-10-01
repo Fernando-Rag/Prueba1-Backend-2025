@@ -21,8 +21,10 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.registroVisitante, name='home'),
-    path('registroVisitante/', views.registroVisitante),
-    path('registroEntrada/', views.registroEntrada),
-    path('registroSalida/', views.registroSalida),
-    path('busquedaVisitantes/', views.busquedaVisitantes)
+    path('registroVisitante/', views.registroVisitante, name='registroVisitante'),
+    path('registroEntrada/', views.registroEntrada, name='registroEntrada'),
+    path('registroSalida/', views.registroSalida, name='registroSalida'),
+    path('busquedaVisitantes/', views.busquedaVisitantes, name='busquedaVisitantes'),
+    path('visitante/<int:pk>/update/', views.visitante_update, name='visitante_update'),
+    path('visitante/<int:pk>/delete/', views.visitante_delete, name='visitante_delete'),
 ]

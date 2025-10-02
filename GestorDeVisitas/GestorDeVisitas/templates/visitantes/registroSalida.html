@@ -1,2 +1,61 @@
 {% extends 'visitantes/base.html' %}
+{% load widget_tweaks %}
 {% block title %}Registro Salida{% endblock %}
+{% block main %}
+<div class="flex justify-center items-center min-h-screen bg-gray-100">
+  <div class="w-full max-w-3xl bg-white rounded-lg shadow-lg p-6 sm:p-8 mx-2">
+    <h2 class="text-2xl font-bold mb-6 text-gray-800 text-center">Registrar Salida</h2>
+    <form method="post" class="mb-6 space-y-4">
+      {% csrf_token %}
+      <div>
+        <label class="block text-gray-700 font-semibold mb-1">
+          RUT del Visitante
+        </label>
+        {{ form.visitante|add_class:"w-full px-3 py-2 border border-black rounded focus:outline-none focus:ring-2 focus:ring-yellow-400" }}
+        {% if form.visitante.errors %}
+          <div class="text-red-500 text-sm">{{ form.visitante.errors }}</div>
+        {% endif %}
+      </div>
+      <button type="submit" class="bg-yellow-400 text-white px-4 py-2 rounded-full hover:bg-yellow-500 transition font-semibold w-full">
+        Registrar Salida
+      </button>
+      {% if form.non_field_errors %}
+        <div class="text-red-500 text-center mt-4">
+          {% for error in form.non_field_errors %}
+            {{ error }}
+          {% endfor %}
+        </div>
+      {% endif %}
+    </form>
+    <div class="overflow-x-auto mt-8">
+      <h3 class="text-lg font-semibold mb-2 text-gray-700 text-center ">Visitantes con visita activa</h3>
+      <table class="w-full text-left border-collapse">
+        <thead>
+          <tr class="bg-gray-300">
+            <th class="px-4 py-2">Nombre/s</th>
+            <th class="px-4 py-2">Apellido/s</th>
+            <th class="px-4 py-2 min-w-[150px]">RUT</th>
+            <th class="px-4 py-2">Motivo</th>
+            <th class="px-4 py-2">Hora de Entrada</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for entrada in entradas %}
+          <tr class="hover:bg-gray-100 transition">
+            <td class="px-4 py-2">{{ entrada.visitante.nombre_s }}</td>
+            <td class="px-4 py-2">{{ entrada.visitante.apellido_s }}</td>
+            <td class="px-4 py-2 min-w-[150px] whitespace-nowrap font-mono">{{ entrada.visitante.rut }}</td>
+            <td class="px-4 py-2">{{ entrada.motivo }}</td>
+            <td class="px-4 py-2">{{ entrada.hora_entrada|date:"d/m/Y H:i" }}</td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="5" class="text-center py-8 text-gray-400">No hay visitantes con visita activa.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

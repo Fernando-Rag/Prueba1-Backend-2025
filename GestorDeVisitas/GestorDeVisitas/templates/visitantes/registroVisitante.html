@@ -10,7 +10,6 @@
       {% for field in form %}
         <div>
           <label class="block text-gray-700 font-semibold mb-1">
-            {# Personaliza el label del campo rut #}
             {% if field.name == 'rut' %}RUT{% else %}{{ field.label }}{% endif %}
           </label>
           {{ field|add_class:"w-full px-3 py-2 border border-black rounded focus:outline-none focus:ring-2 focus:ring-yellow-400" }}
@@ -24,11 +23,12 @@
       </button>
     </form>
     <div class="overflow-x-auto">
+      <h3 class="text-lg font-semibold mb-2 text-gray-700 text-center ">Visitantes Registrados</h3>
       <table class="w-full text-left border-collapse">
         <thead>
-          <tr class="bg-gray-200">
-            <th class="px-4 py-2">Nombre</th>
-            <th class="px-4 py-2">Apellido</th>
+          <tr class="bg-gray-300">
+            <th class="px-4 py-2">Nombre/s</th>
+            <th class="px-4 py-2">Apellido/s</th>
             <th class="px-4 py-2">Edad</th>
             <th class="px-4 py-2">RUT</th>
           </tr>
@@ -39,7 +39,7 @@
             <td class="px-4 py-2">{{ v.nombre_s }}</td>
             <td class="px-4 py-2">{{ v.apellido_s }}</td>
             <td class="px-4 py-2">{{ v.edad }}</td>
-            <td class="px-4 py-2">{{ v.rut }}</td>
+            <td class="px-4 py-2 min-w-[150px] whitespace-nowrap font-mono">{{ v.rut }}</td>
           </tr>
           {% empty %}
           <tr>

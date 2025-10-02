@@ -93,12 +93,13 @@ def registroSalida(request):
 def busquedaVisitantes(request):
     visitas = []
     rut = request.GET.get('rut', '').strip()
+    rut_formateado = formatea_rut(rut) if rut else ''
     dia = request.GET.get('dia', '').strip()
     error = None
 
     if rut:
         try:
-            visitante = Visitante.objects.get(rut=rut)
+            visitante = Visitante.objects.get(rut=rut_formateado)
             entradas = RegistroEntrada.objects.filter(visitante=visitante).order_by('-hora_entrada')
         except Visitante.DoesNotExist:
             error = "No existe un visitante con ese RUT."
@@ -126,8 +127,25 @@ def busquedaVisitantes(request):
         })
 
     return render(request, 'visitantes/busquedaVisitantes.html', {
-        'visitas': visitas,
-        'rut': rut,
-        'dia': dia,
-        'error': error,
+    'visitas': visitas,
+    'rut': rut_formateado,
+    'dia': dia,
+    'error': error,
     })
+
+#busqueda por rut estandarizada
+
+import re
+
+def formatea_rut(rut):
+    "estandarisa el rut independiente lo que ponga en la casilla"
+    rut = rut.replace(".", "").replace("-", "").replace(" ", "").upper()
+    if len(rut) < 2:
+        return rut
+    cuerpo = rut[:-1]
+    dv = rut[-1]
+    # Pone puntos cada 3 dígitos desde la derecha
+    cuerpo = cuerpo[::-1]
+    cuerpo = '.'.join([cuerpo[i:i+3] for i in range(0, len(cuerpo), 3)])
+    cuerpo = cuerpo[::-1]
+    return f"{cuerpo}-{dv}"

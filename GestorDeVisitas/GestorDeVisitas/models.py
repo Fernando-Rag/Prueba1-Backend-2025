@@ -8,7 +8,7 @@ from .validators import validate_rut_chile, normalize_rut, format_rut
 class Visitante(models.Model):
     nombre_s = models.CharField(max_length=50)
     apellido_s = models.CharField(max_length=50)
-    edad = models.IntegerField()
+    edad = models.IntegerField(max_length=3)
     
     #usa la funcion de validacion rut chile para vailidar si el rut existe
     rut = models.CharField("RUT", max_length=12, unique=True, db_index=True, validators=[validate_rut_chile])

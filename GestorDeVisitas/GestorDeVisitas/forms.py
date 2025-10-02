@@ -1,10 +1,12 @@
 from django import forms
 from .models import Visitante, RegistroEntrada, RegistroSalida
 
+#creacion de formulario usando fomrs de django
 class VisitanteForm(forms.ModelForm):
     class Meta:
         model = Visitante
         fields = ["nombre_s", "apellido_s", "edad", "rut"]
+        # lo uso para que el titulo de la casilla tenga Nombre/s y no salga como nombre s
         labels = {
             'nombre_s': 'Nombre/s',
             'apellido_s': 'Apellido/s',
@@ -28,6 +30,8 @@ class VisitanteForm(forms.ModelForm):
             raise forms.ValidationError("En esta casilla no puden ir numeros")
         return apellido
 
+
+#creacion de formulario usando el forms de djago 
 class RegistroEntradaForm(forms.ModelForm):
     class Meta:
         model = RegistroEntrada
@@ -38,9 +42,10 @@ class RegistroEntradaForm(forms.ModelForm):
         }
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Solo visitantes sin visita activa
+        #esto es para que me muestro solo a los visintes sin una visita activa
         self.fields['visitante'].queryset = Visitante.objects.filter(visita_activa=False)
 
+#registro de salida con forms de django
 class RegistroSalidaForm(forms.ModelForm):
     class Meta:
         model = RegistroSalida
@@ -52,5 +57,5 @@ class RegistroSalidaForm(forms.ModelForm):
         }
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Solo visitantes con visita activa
+        # esta parte hace que solo me muestre a los visitantes con una vista activa
         self.fields['visitante'].queryset = Visitante.objects.filter(visita_activa=True)

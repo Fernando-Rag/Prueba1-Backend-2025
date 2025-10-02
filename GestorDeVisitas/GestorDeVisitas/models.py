@@ -3,11 +3,16 @@ from django.utils import timezone
 from django.core.exceptions import ValidationError
 from .validators import validate_rut_chile, normalize_rut, format_rut
 
+
+#modelo de la tabla visitante
 class Visitante(models.Model):
     nombre_s = models.CharField(max_length=50)
     apellido_s = models.CharField(max_length=50)
     edad = models.IntegerField()
+    
+    #usa la funcion de validacion rut chile para vailidar si el rut existe
     rut = models.CharField("RUT", max_length=12, unique=True, db_index=True, validators=[validate_rut_chile])
+    #esto es para dejar si el visitante esta con una visita activa 
     visita_activa = models.BooleanField(default=False)
 
     def clean(self):
@@ -22,7 +27,10 @@ class Visitante(models.Model):
         return f"{self.nombre_s} {self.apellido_s} ({self.rut})"
 
 
+
+#registrar la entrada ocuoe el datatimefield para que tome la zona horaria en el cual se encuentra en el momendo de
 class RegistroEntrada(models.Model):
+    #uso foreingkey para usar visitantes ya registrados
     visitante = models.ForeignKey(Visitante, on_delete=models.PROTECT, related_name="visitas")
     motivo = models.CharField(max_length=100)
     hora_entrada = models.DateTimeField(default=timezone.now)
@@ -40,8 +48,11 @@ class RegistroEntrada(models.Model):
         return f"Entrada: {self.visitante} ({self.hora_entrada})"
 
 
+#tabla para registrar una salida con una visita activa
 class RegistroSalida(models.Model):
+    #uso foreingkey para usar visitantes ya registrados
     visitante = models.ForeignKey(Visitante, on_delete=models.PROTECT, related_name="salidas")
+    #registrar la entrada ocuoe el datatimefield para que tome la zona horaria en el cual se encuentra en el momendo de
     hora_salida = models.DateTimeField(default=timezone.now)
 
     def save(self, *args, **kwargs):

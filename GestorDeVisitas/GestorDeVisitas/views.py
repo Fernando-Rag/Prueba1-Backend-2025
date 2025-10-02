@@ -3,7 +3,8 @@ from .models import Visitante, RegistroEntrada, RegistroSalida
 from .forms import VisitanteForm, RegistroEntradaForm, RegistroSalidaForm
 from django.utils import timezone
 
-# Visitante CRUD
+# registro de visitante crud
+
 def registroVisitante(request):
     visitantes = Visitante.objects.all()
     if request.method == 'POST':
@@ -15,6 +16,7 @@ def registroVisitante(request):
         form = VisitanteForm()
     return render(request, 'visitantes/registroVisitante.html', {'visitantes': visitantes, 'form': form})
 
+# para actualizar los datos de un visitante esto solo lo puede hacer un administrador
 def visitante_update(request, pk):
     visitante = get_object_or_404(Visitante, pk=pk)
     if request.method == 'POST':
@@ -26,6 +28,7 @@ def visitante_update(request, pk):
         form = VisitanteForm(instance=visitante)
     return render(request, 'visitantes/registroVisitante.html', {'form': form, 'visitante': visitante})
 
+#eliminar un visitante esta funcion tambien solo la va a poder usar el admin
 def visitante_delete(request, pk):
     visitante = get_object_or_404(Visitante, pk=pk)
     if request.method == 'POST':
@@ -47,7 +50,8 @@ def registroEntrada(request):
     else:
         form = RegistroEntradaForm()
 
-    # Solo la última entrada (visita activa) por visitante
+    # esta funcion hace que solo se muestre la ultima entrada registrada del visitante
+    # ya que note el error de que cuando ponia una entrada salian todas las entradas del visitante
     visitantes_activos = Visitante.objects.filter(visita_activa=True)
     entradas = []
     for v in visitantes_activos:
@@ -75,7 +79,8 @@ def registroSalida(request):
     else:
         form = RegistroSalidaForm()
 
-    # Solo la última entrada (visita activa) por visitante
+    # esta funcion hace que solo se muestre la ultima entrada registrada del visitante
+    # ya que note el error de que cuando ponia una entrada salian todas las entradas del visitante
     visitantes_activos = Visitante.objects.filter(visita_activa=True)
     entradas = []
     for v in visitantes_activos:
@@ -89,7 +94,7 @@ def registroSalida(request):
         'error': error
     })
 
-# Búsqueda de visitantes
+# busqueda de visintantes por rut o por fecha
 def busquedaVisitantes(request):
     visitas = []
     rut = request.GET.get('rut', '').strip()
@@ -117,7 +122,7 @@ def busquedaVisitantes(request):
     else:
         entradas = []
 
-    # Asociar salida a cada entrada
+    # Asocia las salidas con las entradas para que muestre los datos de salida y entrada
     visitas = []
     for entrada in entradas:
         salida = entrada.visitante.salidas.filter(hora_salida__gt=entrada.hora_entrada).order_by('hora_salida').first()

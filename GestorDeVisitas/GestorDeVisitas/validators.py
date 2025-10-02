@@ -2,6 +2,10 @@ import re
 import itertools
 from django.core.exceptions import ValidationError
 
+#este archivo tiene como funcion principal validar el rut 
+#lo exporte de forma sensilla ya que esta es una formula matematica conocida para validar un rur en chile 
+#llamada modulo 11
+
 RUT_CLEAN_RE = re.compile(r"[^0-9Kk]")
 
 def normalize_rut(value: str):

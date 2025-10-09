@@ -27,9 +27,6 @@ DEBUG = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_DIRS = [
-    BASE_DIR / 'static'
-]
 
 ALLOWED_HOSTS = [
     ' .herokuapp.com '

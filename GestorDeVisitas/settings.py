@@ -29,7 +29,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 ALLOWED_HOSTS = [
-    ' .herokuapp.com '
+    '.herokuapp.com '
 ]
 
 

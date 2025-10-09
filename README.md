@@ -77,3 +77,28 @@ python manage.py createsuperuser
 ragnar
 ragnar@gmail.cl
 ragnar
+
+
+
+Movimos todo el proyecto a la carpeta raiz
+
+Agregue el archivo "requirements.txt"
+se ejecuta  "pip install -r requirements.txt"
+
+Esto es necesario para levantar la pagina mediante Heroku
+
+creamos el archivo "Procfile"
+
+dentro del archivo settings.py se agrega esto
+
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'statocfiles'
+STATICFILES_DIRS = [
+    BASE_DIR / 'static'
+]
+
+ALLOWED_HOSTS = [
+    ' .herokuapp.com '
+]
+
+

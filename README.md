@@ -92,7 +92,7 @@ creamos el archivo "Procfile"
 dentro del archivo settings.py se agrega esto
 
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'statocfiles'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]

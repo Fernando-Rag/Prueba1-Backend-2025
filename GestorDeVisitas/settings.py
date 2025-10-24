@@ -26,10 +26,14 @@ SECRET_KEY = 'django-insecure-@13z_l%g)0k-6)g5xohc^@^xp7d+#bd-9321fck2l^u-(i(uk&
 DEBUG = True
 
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = BASE_DIR / 'statocfiles'
+STATICFILES_DIRS = [
+    BASE_DIR / 'static'
+]
 
 ALLOWED_HOSTS = [
-    '.herokuapp.com '
+    '.herokuapp.com ',
+    'prueba2backend-de0ea49459a9.herokuapp.com'
 ]
 
 

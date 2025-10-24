@@ -32,7 +32,7 @@ STATICFILES_DIRS = [
 ]
 
 ALLOWED_HOSTS = [
-    '.herokuapp.com ',
+    '.herokuapp.com',
     'prueba2backend-de0ea49459a9.herokuapp.com'
 ]
 
@@ -52,6 +52,8 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    # WhiteNoise middleware sirve archivos estáticos en producción (Heroku)
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -127,6 +129,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = [
+    BASE_DIR / 'static'
+]
+
+# Usar almacenamiento de WhiteNoise para servir archivos estáticos comprimidos y con
+# nombres con hash en producción. Esto ayuda a que Heroku entregue correctamente
+# los assets después de `collectstatic`.
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field

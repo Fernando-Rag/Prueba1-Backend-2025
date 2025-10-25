@@ -16,6 +16,7 @@ from dotenv import load_dotenv
 import os
 
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -93,15 +94,18 @@ WSGI_APPLICATION = 'GestorDeVisitas.wsgi.application'
 load_dotenv()
 
 DATABASES = {
-    'default': {
-        "ENGINE": os.getenv(""),
-        "NAME" : os.getenv("dbname"),
-        "USER" : os.getenv("user"),
-        "PASSWORD" : os.getenv("password"),
-        "HOST" :  os.getenv("host"),
-        "PORT" : os.getenv("port")
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.getenv("SUPABASE_DB_NAME"),
+        "USER": os.getenv("SUPABASE_DB_USER"),
+        "PASSWORD": os.getenv("SUPABASE_DB_PASSWORD"),
+        "HOST": os.getenv("SUPABASE_HOST"),
+        "PORT": os.getenv("SUPABASE_PORT", "5432"),
     }
 }
+
+SECRET_KEY = os.getenv("SECRET_KEY")
+DEBUG = os.getenv("DEBUG", "False") == "True"
 
 
 # Password validation

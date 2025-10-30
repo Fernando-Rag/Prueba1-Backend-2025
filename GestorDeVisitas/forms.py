@@ -61,11 +61,11 @@ class VisitanteForm(forms.ModelForm):
             except ValueError:
                 raise forms.ValidationError("Valor de edad inválido.")
 
-        # Rango 0..999 (no negativos)
-        if valor < 0:
-            raise forms.ValidationError("La edad no puede ser negativa.")
+        # Rango 1..999 (no negativos)
+        if valor < 1:
+            raise forms.ValidationError("NO existe la edad negativa")
         if valor > 999:
-            raise forms.ValidationError("La edad no puede ser mayor que 999.")
+            raise forms.ValidationError("Esa edad no es correcta")
 
         return valor
 

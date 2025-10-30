@@ -29,6 +29,45 @@ class VisitanteForm(forms.ModelForm):
         if not all(w.isalpha() for w in apellido.replace(' ', '')):
             raise forms.ValidationError("En esta casilla no puden ir numeros")
         return apellido
+    
+    def clean_edad(self):
+       
+        raw = self.cleaned_data.get('edad')
+
+        # Si el campo viene ya como int desde el widget (IntegerField en el modelo)
+        if isinstance(raw, int):
+            valor = raw
+        else:
+            # Si viene como string (p. ej. por algún widget personalizado), validamos la cadena.
+            if raw is None:
+                raise forms.ValidationError("Edad es requerido.")
+            # Normalizar espacios
+            s = str(raw).strip()
+
+            # No permitir comas ni puntos (decimales)
+            if ',' in s or '.' in s:
+                raise forms.ValidationError("Ingrese un número entero sin comas ni puntos.")
+
+            # Solo dígitos (no signos + ni -)
+            if not s.isdigit():
+                raise forms.ValidationError("Ingrese solo dígitos (números enteros, sin signos ni letras).")
+
+            # Máximo 3 dígitos
+            if len(s) > 3:
+                raise forms.ValidationError("La edad no puede tener más de 3 dígitos (máximo 999).")
+
+            try:
+                valor = int(s)
+            except ValueError:
+                raise forms.ValidationError("Valor de edad inválido.")
+
+        # Rango 0..999 (no negativos)
+        if valor < 0:
+            raise forms.ValidationError("La edad no puede ser negativa.")
+        if valor > 999:
+            raise forms.ValidationError("La edad no puede ser mayor que 999.")
+
+        return valor
 
 
 #creacion de formulario usando el forms de djago 

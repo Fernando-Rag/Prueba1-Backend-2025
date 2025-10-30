@@ -76,7 +76,7 @@ python manage.py createsuperuser
 
 ragnar
 ragnar@gmail.cl
-ragnar
+Ragnar7m7.,1234
 
 
 

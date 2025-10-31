@@ -130,9 +130,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = 'es'
+LANGUAGE_CODE = 'es'  #me estaba dando problemas de traduccion
 
-TIME_ZONE = 'America/Santiago'
+TIME_ZONE = 'America/Santiago' #cuando insertaba datos de hora y fecha automaticos me tomaba el de estados unidos 
 
 USE_I18N = True
 

@@ -34,7 +34,6 @@ class RegistroSalidaInline(admin.TabularInline):
 @admin.action(description="Marcar visita(s) seleccionada(s) como activa(s)")
 def marcar_como_activa(modeladmin, request, queryset):
     # Actualiza en bloque el campo visita_activa a True para los objetos seleccionados.
-    # queryset.update es eficiente porque ejecuta una sola consulta UPDATE en la BD.
     updated = queryset.update(visita_activa=True)
     # message_user muestra un mensaje en la interfaz del admin (aquí en español).
     modeladmin.message_user(
